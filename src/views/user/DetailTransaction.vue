@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useTransactionStore } from "../../stores/transactionStore";
 import Toast from "../../utils/Toast";
 import axios from "axios";
@@ -33,7 +33,7 @@ const addressUser = async (data: any) => {
   }
 };
 
-watch(transactionStore.detailTransaction, (newValue, oldValue) => {
+watch(transactionStore.detailTransaction, (newValue, _) => {
   if (newValue) {
     addressUser(transactionStore.detailTransaction.address);
   }

@@ -2,12 +2,12 @@
 import Dashboard from "../views/admin/Dashboard.vue";
 // import Login from "../views/admin/Login.vue";
 import Books from "../views/admin/Books.vue";
-import Transactions from "../views/admin/Transaction.vue";
-import Users from "../views/admin/User.vue";
+// import Transactions from "../views/admin/Transaction.vue";
+// import Users from "../views/admin/User.vue";
 import Profile from "../views/admin/Profile.vue";
 import FormBook from "../components/admin/Books/Form.vue";
 import DetailBook from "../components/admin/Books/DetailBook.vue";
-import FormTransaction from "../components/admin/Transactions/Form.vue";
+// import FormTransaction from "../components/admin/Transactions/Form.vue";
 
 const adminRoutes = [
   {

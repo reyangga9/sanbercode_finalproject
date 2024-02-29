@@ -61,7 +61,7 @@ export const useCartStore = defineStore("cart", () => {
   };
 
   const addCart = async (productId: any, quantity: any) => {
-    const { data } = await axios.post(
+    await axios.post(
       `${API_URL}/cart`,
       { productId: productId, quantity: quantity },
       { headers: { Authorization: `Bearer ${user.value.token}` } }
@@ -86,13 +86,13 @@ export const useCartStore = defineStore("cart", () => {
     }
   };
 
-  const incrementProduct = async (productId: any) => {};
+  // const incrementProduct = async (productId: any) => {};
 
   return {
     carts,
     addCart,
     fetchCarts,
-    incrementProduct,
+    // incrementProduct,
     removeProductFromCart,
     fetchCourier,
     couriers,

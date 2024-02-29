@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import axios from "axios";
-import NavDashboard from "../NavDashboard.vue";
-import { ref, Ref } from "vue";
+
+import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import LoginViewVue from "../../../views/auth/LoginView.vue";
-import { useAuthStore } from "../../../stores/authStore.ts";
+
+import { useAuthStore } from "../../../stores/authStore";
 
 import { storeToRefs } from "pinia";
+import { API_URL } from "../../../utils";
 
 const authStore = useAuthStore();
 
@@ -31,6 +32,7 @@ interface Book {
   language: string;
   categories: any[];
   authors: any[];
+  delete?: any;
 }
 
 const book = ref<Book>({
@@ -50,15 +52,15 @@ const book = ref<Book>({
   categories: [],
   authors: [],
 });
-let categories: Ref<any[]> = ref([]);
-let authorz: Ref<any[]> = ref([]);
+let categories: any = ref([]);
+let authorz: any = ref([]);
 let id_category: any = ref(0);
 let id_author: any = ref(0);
 
 const route = useRoute();
 const id = route.params.id;
 const fetchDataBook = async (id: any) => {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
+  const res = await axios.get(`${API_URL}/products/${id}`);
   const responseData = res.data.data;
 
   const {
@@ -105,7 +107,7 @@ const fetchDataBook = async (id: any) => {
 
 const fetchDataCategories = async () => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
+    const res = await axios.get(`${API_URL}/categories`);
 
     categories = res.data.data;
     console.log(categories);
@@ -116,9 +118,7 @@ const fetchDataCategories = async () => {
 
 const fetchDataAuthors = async () => {
   try {
-    const res = await axios.get(
-      `${import.meta.env.VITE_API_URL}/authors?limit=50`
-    );
+    const res = await axios.get(`${API_URL}/authors?limit=50`);
     authorz = res.data.data;
     console.log(authorz);
   } catch (error) {
@@ -138,8 +138,8 @@ const handleSubmit = () => {
     const isoDate = `${book.value.publishedAt}T00:00:00Z`;
     book.value.publishedAt = isoDate;
 
-    delete book.value.categories;
-    delete book.value.authors;
+    // delete book.value.categories;
+    // delete book.value.authors;
 
     const fetchEditBook = async (id: any) => {
       console.log(user.value);
@@ -151,18 +151,14 @@ const handleSubmit = () => {
       };
 
       try {
-        const res = await axios.put(
-          `${import.meta.env.VITE_API_URL}/products/${id}`,
-          book.value,
-          config
-        );
+        await axios.put(`${API_URL}/products/${id}`, book.value, config);
 
         alert("data berhasild di edit");
-        // Optionally, you can return the response data or handle it in some other way
+
         router.push("/admin/books");
       } catch (error) {
         console.error("Error editing book:", error);
-        // Optionally, you can throw the error again to propagate it to the caller
+
         throw error;
       }
     };

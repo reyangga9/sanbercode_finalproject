@@ -3,6 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import axios from "axios";
 import { ref } from "vue";
+import { API_URL } from "../../../utils";
 
 const route = useRoute();
 const router = useRouter();
@@ -45,6 +46,7 @@ interface Book {
     createdAt: string;
     updatedAt: string;
   }[];
+  data: any;
 }
 
 const book = ref<Book | null>(null);
@@ -52,9 +54,7 @@ const id = route.params.id;
 
 const fetchData = async () => {
   try {
-    const resp = await axios.get<Book>(
-      `${import.meta.env.VITE_API_URL}/products/${id}`
-    );
+    const resp = await axios.get<Book>(`${API_URL}/products/${id}`);
     book.value = resp.data.data;
     console.log(book.value);
   } catch (error) {

@@ -3,15 +3,13 @@ import { storeToRefs } from "pinia";
 import { useCartStore } from "../../stores/cartStore";
 import { useTransactionStore } from "../../stores/transactionStore";
 import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 import { useAuthStore } from "../../stores/authStore";
-import Toast from "../../utils/Toast";
 
 const cartStore = useCartStore();
 const transactionStore = useTransactionStore();
 const { carts, couriers, addresses, shipping } = storeToRefs(cartStore);
 const { payments } = storeToRefs(transactionStore);
-const router = useRouter();
 
 const authStore = useAuthStore();
 
@@ -27,10 +25,10 @@ if (authStore?.user) {
 const removeProduct = (productId: any) => {
   cartStore.removeProductFromCart(productId);
 };
-const addProcutCart = (productId: any) => {
-  console.log(productId);
-  cartStore.incrementProduct(productId);
-};
+// const addProcutCart = (productId: any) => {
+//   console.log(productId);
+//   cartStore.incrementProduct(productId);
+// };
 
 const address: any = ref("");
 const courier: any = ref("");
@@ -167,10 +165,8 @@ const formHandleCheckout = (e: any) => {
                           -
                         </button>
                         <span class="ml-3 mr-3">{{ cart.quantity }}</span>
-                        <button
-                          class="btn btn-circle btn-sm btn-info"
-                          @click="addProcutCart(cart.productId)"
-                        >
+                        <button class="btn btn-circle btn-sm btn-info">
+                          <!-- @click="addProcutCart(cart.productId)" -->
                           +
                         </button>
                       </td>

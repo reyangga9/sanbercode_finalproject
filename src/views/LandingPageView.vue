@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { RouterLink, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import BookList from "../components/BookList.vue";
-import { useAuthStore } from "../stores/authStore";
+// import { useAuthStore } from "../stores/authStore";
 import { useBookStore } from "../stores/bookStore";
 
 const router = useRouter();
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 const bookStore = useBookStore();
 const { books, booksFiction, booksBiografi } = storeToRefs(bookStore);
-const { user } = storeToRefs(authStore);
 
 const limitBook = computed(() => books.value.slice(0, 4));
 

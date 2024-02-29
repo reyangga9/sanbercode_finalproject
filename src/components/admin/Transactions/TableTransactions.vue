@@ -1,68 +1,25 @@
 <script setup lang="ts">
 import axios from "axios";
-import { config } from "dotenv";
-
 import { ref, Ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../../../stores/authStore";
-
 import { storeToRefs } from "pinia";
+import { API_URL } from "../../../utils";
 const authStore = useAuthStore();
 
 const { user } = storeToRefs(authStore);
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${user.value.token}`,
-    "Content-Type": "application/json",
-  },
-};
-
 const router = useRouter();
-
-interface Book {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  stock: number;
-  language: string;
-  publishedAt: string;
-  publisher: string;
-  thumbnail: string;
-}
-
 const idNow: Ref<number> = ref(1);
-
-const books = ref<Book[]>([]);
-
-const fetchTransactions = async (id: any) => {
-  try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/transaction`,
-      config
-    );
-
-    if (!response) {
-      throw new Error("Failed to fetch books");
-    }
-
-    books.value = response.data.data;
-  } catch (error) {
-    console.error("Error fetching books:", error);
-  }
-};
-fetchTransactions(idNow.value);
 
 const nextPage: () => void = () => {
   idNow.value++;
-  fetchTransactions(idNow.value);
+  // fetchTransactions(idNow.value);
 };
 
 const previousPage: () => void = () => {
   if (idNow.value > 1) {
     idNow.value--;
-    fetchTransactions(idNow.value);
+    // fetchTransactions(idNow.value);
   }
 };
 
@@ -153,7 +110,7 @@ function formatPrice(price: number) {
           </tr>
         </thead>
         <tbody>
-          <tr
+          <!-- <tr
             class="bg-white border-b dark:text-gray-100 dark:bg-gray-500 dark:border-gray-700"
             v-for="(item, index) in books"
             :key="index"
@@ -299,7 +256,7 @@ function formatPrice(price: number) {
                 </svg>
               </button>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
         <!-- <tbody v-else>
         <tr>
